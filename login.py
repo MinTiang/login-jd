@@ -98,14 +98,14 @@ async def loginPhone(chromium_path, workList, uid, headless):
             title = await page.title()
             if title in ['手机语音验证', '手机短信验证']:
                 print('需要' + title)
-                return True  
+                return True
             return False
         except Exception as e:
             print("isSendSMSDirectly " + str(e))
             return False
 
     usernum = workList[uid].account
-    
+
     print(f"正在登录 {usernum} 的手机号")
 
     browser = await launch(
@@ -123,7 +123,7 @@ async def loginPhone(chromium_path, workList, uid, headless):
     )
     try:
         page = await browser.newPage()
-	await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0')
+	    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0')
         await page.setViewport({"width": 360, "height": 640})
         await page.goto(
             "https://plogin.m.jd.com/login/login"
@@ -271,7 +271,7 @@ async def loginPassword(chromium_path, workList, uid, headless):
             title = await page.title()
             if title in ['手机语音验证', '手机短信验证']:
                 print('需要' + title)
-                return True  
+                return True
             return False
         except Exception as e:
             print("isSendSMSDirectly " + str(e))
@@ -297,7 +297,7 @@ async def loginPassword(chromium_path, workList, uid, headless):
     )
     try:
         page = await browser.newPage()
-	await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0')
+	    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0')
         await page.setViewport({"width": 360, "height": 640})
         await page.goto(
             "https://plogin.m.jd.com/login/login"
@@ -339,7 +339,7 @@ async def loginPassword(chromium_path, workList, uid, headless):
                     await page.waitFor(3000)
                 elif await page.xpath('//*[@id="captcha_modal"]/div/div[3]/button'):
                     print("进入点形状、颜色验证分支")
-                    
+
                     workList[uid].status = "pending"
                     workList[uid].msg = "正在过形状、颜色检测"
                     if await verification_shape(page) == "notSupport":
@@ -415,7 +415,7 @@ async def loginPassword(chromium_path, workList, uid, headless):
         await browser.close()
         await deleteSessionDelay(workList, uid)
         raise e
-        
+
     print("任务完成退出")
 
     await browser.close()
@@ -550,7 +550,7 @@ async def typePhoneSMScode(page, workList, uid):
     authcode_input = await page.waitForSelector('#authcode')
     await authcode_input.type(code)
     await page.waitFor(random.randint(100,300))
-    button = await page.waitForSelector('.btn.J_ping')  
+    button = await page.waitForSelector('.btn.J_ping')
     await button.click()
     await page.waitFor(random.randint(2, 3) * 1000)
 
@@ -1051,7 +1051,7 @@ async def main(workList, uid, oocr, oocrDet):
     headless = 'new'
     #headless = False
     print("选择登录")
-    
+
     try_time = 1
     while True:
         if workList[uid].type == "phone":
