@@ -468,15 +468,17 @@ async def sendSMSDirectly(page):
 
     try:
         while True:
-            if await page.xpath('//*[@id="captcha_modal"]/div/div[3]/div'):
-                await verification(page)
-
+            if await page.xpath('//*[@id="small_img"]'):
+                    print("进入过滑块分支")
+                    await verification(page)
+                    await page.waitFor(2000)
             elif await page.xpath('//*[@id="captcha_modal"]/div/div[3]/button'):
+                print("进入点形状、颜色验证分支")
                 if await verification_shape(page) == "notSupport":
                     return "notSupport"
-
+                await page.waitFor(2000)
             else:
-                break
+                break;
 
             await page.waitFor(3000)
 
