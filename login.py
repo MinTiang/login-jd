@@ -17,6 +17,8 @@ import numpy as np
 import base64
 import io
 import re
+import hashlib
+import uuid
 # 传参获得已初始化的ddddocr实例
 ocr = None
 ocrDet = None
@@ -860,6 +862,7 @@ async def verification_shape(page):
             retry_count -= 1
             target_word = word.replace("\"", "")[-4:]
             print(f"点选字为： {target_word}")
+            request.urlretrieve(image_src, f"/app/images/{target_word}_{uuid.uuid4().hex}.jpg")
             gray_img = get_gray_img("shape_image.png")
             xy_list = ocrDet.detection(gray_img)
             src_img = Image.open("shape_image.png")
